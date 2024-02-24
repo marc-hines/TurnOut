@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Flasher.h"
 
 class TurnOut
 {
@@ -69,60 +70,14 @@ class TurnOut
 
 };
 
-class Flasher
-{
-	// Class Member Variables
-	// These are initialized at startup
-	int ledPin;          // the number of the LED pin
-	unsigned long OnTime;     // milliseconds of on-time
-	unsigned long OffTime;    // milliseconds of off-time
 
-	// These maintain the current state
-	int ledState;             		  // ledState used to set the LED
-	unsigned long previousMillis;  	// will store last time LED was updated
-
-  // Constructor - creates a Flasher 
-  // and initializes the member variables and state
-  public:
-  Flasher(int pin, long on, long off)
-  {
-	ledPin = pin;
-	pinMode(ledPin, OUTPUT);     
-	  
-	OnTime = on;
-	OffTime = off;
-	
-	ledState = LOW; 
-	previousMillis = 0;
-  }
-
-  void Update()
-  {
-    // check to see if it's time to change the state of the LED
-    unsigned long currentMillis = millis();
-     
-    if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
-    {
-    	ledState = LOW;  // Turn it off
-      previousMillis = currentMillis;  // Remember the time
-      digitalWrite(ledPin, ledState);  // Update the actual LED
-    }
-    else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
-    {
-      ledState = HIGH;  // turn it on
-      previousMillis = currentMillis;   // Remember the time
-      digitalWrite(ledPin, ledState);	  // Update the actual LED
-    }
-  }
-};
-
-  /**Flasher led1(22, 200, 200);
+  Flasher led1(22, 200, 200);
   Flasher led2(23, 200, 250);
   Flasher led3(24, 200, 300);
   Flasher led4(25, 200, 350);
-  Flasher led5(26, 200, 400);**/
+  //Flasher led5(26, 200, 400);
 
-  TurnOut turnOut1 (22,23,24,26);
+  //TurnOut turnOut1 (22,23,24,26);
 
 void setup() {
 
@@ -130,12 +85,12 @@ void setup() {
 
 void loop() {
 
-  /**led1.Update();
+  led1.Update();
   led2.Update();
   led3.Update();
   led4.Update();
-  led5.Update();**/
+  //led5.Update();
 
-  turnOut1.Update();
+  //turnOut1.Update();
 
 }
