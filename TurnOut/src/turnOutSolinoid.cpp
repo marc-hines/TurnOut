@@ -17,6 +17,7 @@ turnOutSolinoid::turnOutSolinoid (int _ledPin, int _buttonPin, int _mcForwardPin
     digitalWrite(mcReversePin, LOW);
 
     turnOutState = LOW;
+    previousButtonState = HIGH;
     previousButtonPressMillis = 0;
     previousSoliniodMillis = 0;
 }
@@ -34,11 +35,15 @@ void turnOutSolinoid::update()
     }
 
     // Ignore any new button press for a bit - debounce
-    if (currentMillis - previousButtonPressMillis >= 800)
+    if (currentMillis - previousButtonPressMillis >= 400)
     {
-        // If button is low, it has been pressed
-        int buttonState = digitalRead(buttonPin);
-        if (buttonState == LOW )
+        // If button is low, it is being pressed
+        int currentButtonState = digitalRead(buttonPin);
+        if (currentButtonState == HIGH)
+        {
+            previousButtonState = HIGH;
+        }
+        if (currentButtonState == LOW && previousButtonState == HIGH)
         {
             if (turnOutState == LOW)
             {
@@ -55,6 +60,7 @@ void turnOutSolinoid::update()
             digitalWrite(ledPin, turnOutState);
             previousButtonPressMillis = currentMillis;
             previousSoliniodMillis = currentMillis;
+            previousButtonState = LOW;
         }
     }
 }

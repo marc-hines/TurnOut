@@ -11,6 +11,7 @@ class turnOutSolinoid
     int mcReversePin;
 
     int turnOutState;
+    int previousButtonState;
     unsigned long previousButtonPressMillis;
     unsigned long previousSoliniodMillis;
 
