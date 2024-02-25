@@ -13,6 +13,9 @@ turnOutSolinoid::turnOutSolinoid (int _ledPin, int _buttonPin, int _mcForwardPin
     pinMode(mcForwardPin, OUTPUT); 
     pinMode(mcReversePin, OUTPUT); 
 
+    digitalWrite(mcForwardPin, LOW);
+    digitalWrite(mcReversePin, LOW);
+
     turnOutState = LOW;
     previousButtonPressMillis = 0;
     previousSoliniodMillis = 0;
@@ -24,14 +27,14 @@ void turnOutSolinoid::update()
 
     // We don't want the solinoid powered
     // for more than about 1/4 second.
-    if (currentMillis - previousSoliniodMillis >= 250)
+    if (currentMillis - previousSoliniodMillis >= 200)
     {
         digitalWrite(mcForwardPin, LOW);
         digitalWrite(mcReversePin, LOW);
     }
 
     // Ignore any new button press for a bit - debounce
-    if (currentMillis - previousButtonPressMillis >= 300)
+    if (currentMillis - previousButtonPressMillis >= 800)
     {
         // If button is low, it has been pressed
         int buttonState = digitalRead(buttonPin);
@@ -50,6 +53,7 @@ void turnOutSolinoid::update()
                 digitalWrite(mcReversePin, HIGH);
             }
             digitalWrite(ledPin, turnOutState);
+            previousButtonPressMillis = currentMillis;
             previousSoliniodMillis = currentMillis;
         }
     }
