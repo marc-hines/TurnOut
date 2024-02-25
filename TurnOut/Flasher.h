@@ -1,3 +1,6 @@
+#ifndef FLASHER1PIN_H
+#define FLASHER1PIN_H
+
 #include <Arduino.h>
 
 class flasher
@@ -18,3 +21,5 @@ class flasher
 	void update();
 	
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef TURNOUT_SOLINOID_H
+#define TURNOUT_SOLINOID_H
+
 #include <Arduino.h>
 
 class turnOutSolinoid
@@ -17,3 +20,5 @@ class turnOutSolinoid
     void update();
 
 };
+
+#endif
