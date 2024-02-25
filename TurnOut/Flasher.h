@@ -16,4 +16,5 @@ class flasher
   
 	flasher(int pin, long on, long off);
 	void update();
+	
 };
