@@ -28,14 +28,14 @@ void turnOutSolinoid::update()
 
     // We don't want the solinoid powered
     // for more than about 1/4 second.
-    if (currentMillis - previousSoliniodMillis >= 200)
+    if (currentMillis - previousSoliniodMillis >= 250)
     {
         digitalWrite(mcForwardPin, LOW);
         digitalWrite(mcReversePin, LOW);
     }
 
     // Ignore any new button press for a bit - debounce
-    if (currentMillis - previousButtonPressMillis >= 400)
+    if (currentMillis - previousButtonPressMillis >= 500)
     {
         // If button is low, it is being pressed
         int currentButtonState = digitalRead(buttonPin);

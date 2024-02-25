@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "Flasher.h"
+#include "flasher1Pin.h"
 
-flasher::flasher(int _ledPin, long _onTime, long _offTime)
+flasher1Pin::flasher1Pin(int _ledPin, long _onTime, long _offTime)
   {
 	ledPin = _ledPin;
 	pinMode(ledPin, OUTPUT);     
@@ -13,7 +13,7 @@ flasher::flasher(int _ledPin, long _onTime, long _offTime)
 	previousMillis = 0;
   }
 
-  void flasher::update()
+  void flasher1Pin::update()
   {
     // check to see if it's time to change the state of the LED
     unsigned long currentMillis = millis();
