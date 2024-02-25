@@ -12,13 +12,15 @@ class turnOutSolinoid
 
     int turnOutState;
     int previousButtonState;
-    unsigned long previousButtonPressMillis;
+    unsigned long previousButtonDownMillis;
+    unsigned long previousButtonUpMillis;
     unsigned long previousSoliniodMillis;
 
   public:
 
     turnOutSolinoid (int _ledPin, int _buttonPin, int _mcForwardPin, int _mcReversePin);
     void update();
+    void activate();
 
 };
 

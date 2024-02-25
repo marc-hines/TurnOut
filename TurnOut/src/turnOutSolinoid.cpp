@@ -18,7 +18,8 @@ turnOutSolinoid::turnOutSolinoid (int _ledPin, int _buttonPin, int _mcForwardPin
 
     turnOutState = LOW;
     previousButtonState = HIGH;
-    previousButtonPressMillis = 0;
+    previousButtonDownMillis = 0;
+    previousButtonUpMillis = 0;
     previousSoliniodMillis = 0;
 }
 
@@ -26,41 +27,50 @@ void turnOutSolinoid::update()
 {
     unsigned long currentMillis = millis();
 
-    // We don't want the solinoid powered
-    // for more than about 1/4 second.
-    if (currentMillis - previousSoliniodMillis >= 250)
+    // We don't want the solinoid powered for more
+    // than about 1/5 second to avoid damading it
+    if (currentMillis - previousSoliniodMillis >= 200)
     {
         digitalWrite(mcForwardPin, LOW);
         digitalWrite(mcReversePin, LOW);
     }
 
-    // Ignore any new button press for a bit - debounce
-    if (currentMillis - previousButtonPressMillis >= 500)
+    // Ignore any additional button movement
+    // for a bit - "debounce"
+    if (currentMillis - previousButtonDownMillis >= 400 && currentMillis - previousButtonUpMillis >= 400 )
     {
-        // If button is low, it is being pressed
         int currentButtonState = digitalRead(buttonPin);
+        // Filter out a long button press
         if (currentButtonState == HIGH)
         {
             previousButtonState = HIGH;
+            previousButtonUpMillis = currentMillis;
         }
+        // If button is low and was high 
+        // before, this is new (and valid) button press
         if (currentButtonState == LOW && previousButtonState == HIGH)
         {
-            if (turnOutState == LOW)
-            {
-                turnOutState = HIGH;
-                digitalWrite(mcForwardPin, HIGH);
-                digitalWrite(mcReversePin, LOW);
-            }
-            else
-            {
-                turnOutState = LOW;
-                digitalWrite(mcForwardPin, LOW);
-                digitalWrite(mcReversePin, HIGH);
-            }
-            digitalWrite(ledPin, turnOutState);
-            previousButtonPressMillis = currentMillis;
+            turnOutSolinoid::activate();
+            previousButtonDownMillis = currentMillis;
             previousSoliniodMillis = currentMillis;
             previousButtonState = LOW;
         }
     }
+}
+
+void turnOutSolinoid::activate()
+{
+    if (turnOutState == LOW)
+    {
+        turnOutState = HIGH;
+        digitalWrite(mcForwardPin, HIGH);
+        digitalWrite(mcReversePin, LOW);
+    }
+    else
+    {
+        turnOutState = LOW;
+        digitalWrite(mcForwardPin, LOW);
+        digitalWrite(mcReversePin, HIGH);
+    }
+    digitalWrite(ledPin, turnOutState);
 }
