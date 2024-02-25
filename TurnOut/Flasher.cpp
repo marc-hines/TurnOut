@@ -1,30 +1,30 @@
 #include <Arduino.h>
 #include "Flasher.h"
 
-Flasher::Flasher(int pin, long on, long off)
+flasher::flasher(int _ledPin, long _onTime, long _offTime)
   {
-	ledPin = pin;
+	ledPin = _ledPin;
 	pinMode(ledPin, OUTPUT);     
 	  
-	OnTime = on;
-	OffTime = off;
+	onTime = _onTime;
+	offTime = _offTime;
 	
 	ledState = LOW; 
 	previousMillis = 0;
   }
 
-  void Flasher::Update()
+  void flasher::update()
   {
     // check to see if it's time to change the state of the LED
     unsigned long currentMillis = millis();
      
-    if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
+    if((ledState == HIGH) && (currentMillis - previousMillis >= onTime))
     {
     	ledState = LOW;  // Turn it off
       previousMillis = currentMillis;  // Remember the time
       digitalWrite(ledPin, ledState);  // Update the actual LED
     }
-    else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
+    else if ((ledState == LOW) && (currentMillis - previousMillis >= offTime))
     {
       ledState = HIGH;  // turn it on
       previousMillis = currentMillis;   // Remember the time

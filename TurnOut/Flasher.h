@@ -1,12 +1,12 @@
 #include <Arduino.h>
 
-class Flasher
+class flasher
 {
 	// Class Member Variables
 	// These are initialized at startup
 	int ledPin;          // the number of the LED pin
-	unsigned long OnTime;     // milliseconds of on-time
-	unsigned long OffTime;    // milliseconds of off-time
+	unsigned long onTime;     // milliseconds of on-time
+	unsigned long offTime;    // milliseconds of off-time
 
 	// These maintain the current state
 	int ledState;             	    // ledState used to set the LED
@@ -14,6 +14,6 @@ class Flasher
 
   public:
   
-	Flasher(int pin, long on, long off);
-	void Update();
+	flasher(int pin, long on, long off);
+	void update();
 };
