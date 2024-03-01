@@ -3,13 +3,17 @@
 class flashTwoLeds
 {
 
-	int ledPin1;              // the number of the first LED pin
-	int ledPin2;              // the number of the second LED pin
-	int buttonPin;            // the number of the button pin
+	int ledPin1;               // the number of the first LED pin
+	int ledPin2;               // the number of the second LED pin
+	int buttonPin;             // the number of the button pin
 	unsigned long duration;    // milliseconds of duration to flash
 
-    int flashState;                 // which LED is currently on.ß
-	unsigned long previousMillis;  	// will store last time LED was toggled
+    int flashingState;
+    int ledOneState;                 // which LED is currently on.
+    int previousButtonState;
+    int previousButtonDownMillis;
+    int previousButtonUpMillis;
+	unsigned long previousMillis;    // will store last time LED was toggled
 
   public:
   
@@ -24,28 +28,61 @@ class flashTwoLeds
 
         duration = _duration;
 
-        flashState = LOW; 
+        flashingState = HIGH;
+        ledOneState = HIGH; 
+        previousButtonState = HIGH;
+        previousButtonDownMillis = 0;
+        previousButtonUpMillis = 0;
         previousMillis = 0;
     }
 
     void update()
     {
-        // check to see if it's time to change the state of the LED
         unsigned long currentMillis = millis();
-        
-        if((flashState == HIGH) && (currentMillis - previousMillis >= duration))
+
+        int currentButtonState = digitalRead(buttonPin);
+
+        // Ignore any additional button movement for a bit after a button press or release - "debounce"
+        if (currentMillis - previousButtonDownMillis >= 400 && currentMillis - previousButtonUpMillis >= 400 )
         {
-            flashState = LOW;  // swap states
-            previousMillis = currentMillis;  // Remember the time
-            digitalWrite(ledPin1, HIGH);     // Update the actual LED1
-            digitalWrite(ledPin2, LOW);      // Update the actual LED2
+            if (currentButtonState == HIGH && previousButtonState == LOW)
+            {
+                previousButtonState = HIGH;
+                previousButtonUpMillis = currentMillis;
+                flashingState = HIGH;
+                
+            }
+            if (currentButtonState == LOW && previousButtonState == HIGH)
+            {
+                previousButtonState = LOW;
+                previousButtonDownMillis = currentMillis;
+                flashingState = LOW;
+            }
         }
-        else if ((flashState == LOW) && (currentMillis - previousMillis >= duration))
+
+        if (flashingState == HIGH)
         {
-            flashState = HIGH;  // turn it on
-            previousMillis = currentMillis;   // Remember the time
-            digitalWrite(ledPin1, LOW);      // Update the actual LED1
-            digitalWrite(ledPin2, HIGH);     // Update the actual LED2
+            if (currentMillis - previousMillis >= duration)
+            {
+                if (ledOneState == HIGH)
+                {
+                    ledOneState = LOW;  // turn off first LED
+                    digitalWrite(ledPin1, LOW);     // Update the actual LED1
+                    digitalWrite(ledPin2, HIGH);    // Update the actual LED2
+                }
+                else if (ledOneState == LOW)
+                {
+                    ledOneState = HIGH;  // turn on First LED
+                    digitalWrite(ledPin1, HIGH);    // Update the actual LED1
+                    digitalWrite(ledPin2, LOW);     // Update the actual LED2
+                }
+                previousMillis = currentMillis;  // Remember the time
+            }
+        }
+        else
+        {
+            digitalWrite(ledPin1, LOW);     // Update the actual LED1
+            digitalWrite(ledPin2, LOW);     // Update the actual LED2
         }
     }
 };

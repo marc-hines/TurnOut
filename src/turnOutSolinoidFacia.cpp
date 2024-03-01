@@ -42,15 +42,14 @@ class turnOutSolinoidFacia
         unsigned long currentMillis = millis();
 
         // We don't want the solinoid powered for more
-        // than about 1/5 second to avoid damading it
+        // than about 20 milliseconds to avoid damaging it
         if (currentMillis - previousSoliniodMillis >= 20)
         {
             digitalWrite(mcForwardPin, LOW);
             digitalWrite(mcReversePin, LOW);
         }
 
-        // Ignore any additional button movement
-        // for a bit - "debounce"
+        // Ignore any additional button movement for a bit after a button press or release - "debounce"
         if (currentMillis - previousButtonDownMillis >= 400 && currentMillis - previousButtonUpMillis >= 400 )
         {
             int currentButtonState = digitalRead(buttonPin);
