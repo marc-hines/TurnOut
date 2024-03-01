@@ -39,11 +39,9 @@ class turnOutSolinoidSwitch
 
     void update()
     {
-        int turnOutState;
         unsigned long currentMillis = millis();
 
-        // We don't want the solinoid powered for more
-        // than about 20 milliseconds to avoid damaging it
+        // We don't want the solinoid powered for more than about 20 milliseconds to avoid damaging it
         if (currentMillis - previousSoliniodMillis >= 20)
         {
             digitalWrite(mcForwardPin, LOW);
@@ -71,6 +69,8 @@ class turnOutSolinoidSwitch
             }
         }
     }
+
+private:
 
     void activateSolinoid(int turnOutState)
     {
