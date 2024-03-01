@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-class turnOutSolinoidFacia
+class turnOutSolinoidButton
 {
     int ledPin;
     int buttonPin;
@@ -15,7 +15,7 @@ class turnOutSolinoidFacia
 
   public:
 
-    turnOutSolinoidFacia (int _ledPin, int _buttonPin, int _mcForwardPin, int _mcReversePin)
+    turnOutSolinoidButton (int _ledPin, int _buttonPin, int _mcForwardPin, int _mcReversePin)
     {
         ledPin = _ledPin;
         buttonPin = _buttonPin;

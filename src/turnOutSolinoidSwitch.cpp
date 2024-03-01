@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-class turnOutSolinoidFaciaDccEx
+class turnOutSolinoidSwitch
 {
     int switchPin;
     int mcForwardPin;
@@ -14,7 +14,7 @@ class turnOutSolinoidFaciaDccEx
 
   public:
 
-    turnOutSolinoidFaciaDccEx (int _switchPin, int _mcForwardPin, int _mcReversePin)
+    turnOutSolinoidSwitch (int _switchPin, int _mcForwardPin, int _mcReversePin)
     {
         switchPin = _switchPin;
         mcForwardPin = _mcForwardPin;

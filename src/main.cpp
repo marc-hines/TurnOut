@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#include "turnOutSolinoidFacia.cpp"
-#include "turnOutSolinoidFaciaDccEx.cpp"
+#include "turnOutSolinoidButton.cpp"
+#include "turnOutSolinoidSwitch.cpp"
 #include "flashOneLed.cpp"
 #include "flashTwoLeds.cpp"
 
@@ -10,9 +10,9 @@
   //flashOneLed led3(24, 200, 300);
   //flashOneLed led4(25, 2000, 2000);
 
-  //turnOutSolinoidFacia turnOut1 (22,26,23,24);
+  //turnOutSolinoidButton turnOut1 (22,26,23,24);
 
-  turnOutSolinoidFaciaDccEx turnOut1 (26,23,24);
+  turnOutSolinoidSwitch turnOut2 (26,23,24);
 
 void setup() {
 
@@ -25,6 +25,8 @@ void loop() {
   //led3.update();
   //led4.update();
 
-  turnOut1.update();
+  //turnOut1.update();
+
+  turnOut2.update();
 
 }
