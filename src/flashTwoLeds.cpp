@@ -5,56 +5,55 @@ class flashTwoLeds
 
 	int ledPin1;               // the number of the first LED pin
 	int ledPin2;               // the number of the second LED pin
-	int buttonPin;             // the number of the button pin
+	int switchPin;             // the number of the button pin
 	unsigned long duration;    // milliseconds of duration to flash
 
     int flashingState;
     int ledOneState;                 // which LED is currently on.
-    int previousButtonState;
-    int previousButtonDownMillis;
-    int previousButtonUpMillis;
+    int previousSwitchState;
+    int previousSwitchDownMillis;
+    int previousSwitchUpMillis;
 	unsigned long previousMillis;    // will store last time LED was toggled
 
   public:
   
-    flashTwoLeds(int _ledPin1, int _ledPin2, int _buttonPin, long _duration)
+    flashTwoLeds(int _ledPin1, int _ledPin2, int _switchPin, long _duration)
     {
         ledPin1 = _ledPin1;
         ledPin2 = _ledPin2;
-        buttonPin = _buttonPin;
+        switchPin = _switchPin;
         pinMode(ledPin1, OUTPUT);
         pinMode(ledPin2, OUTPUT); 
-        pinMode(buttonPin, INPUT_PULLUP); 
+        pinMode(switchPin, INPUT_PULLUP); 
 
         duration = _duration;
 
         flashingState = HIGH;
         ledOneState = HIGH; 
-        previousButtonState = HIGH;
-        previousButtonDownMillis = 0;
-        previousButtonUpMillis = 0;
+        previousSwitchState = HIGH;
+        previousSwitchDownMillis = 0;
+        previousSwitchUpMillis = 0;
         previousMillis = 0;
     }
 
     void update()
     {
         unsigned long currentMillis = millis();
+        int currentButtonState = digitalRead(switchPin);
 
-        int currentButtonState = digitalRead(buttonPin);
-
-        // Ignore any additional button movement for a bit after a button press or release - "debounce"
-        if (currentMillis - previousButtonDownMillis >= 400 && currentMillis - previousButtonUpMillis >= 400 )
+        // Ignore any additional changes after a switch change - "debounce"
+        if (currentMillis - previousSwitchDownMillis >= 200 && currentMillis - previousSwitchUpMillis >= 200 )
         {
-            if (currentButtonState == HIGH && previousButtonState == LOW)
+            if (currentButtonState == HIGH && previousSwitchState == LOW)
             {
-                previousButtonState = HIGH;
-                previousButtonUpMillis = currentMillis;
+                previousSwitchState = HIGH;
+                previousSwitchUpMillis = currentMillis;
                 flashingState = HIGH;
             }
-            if (currentButtonState == LOW && previousButtonState == HIGH)
+            if (currentButtonState == LOW && previousSwitchState == HIGH)
             {
-                previousButtonState = LOW;
-                previousButtonDownMillis = currentMillis;
+                previousSwitchState = LOW;
+                previousSwitchDownMillis = currentMillis;
                 flashingState = LOW;
             }
         }

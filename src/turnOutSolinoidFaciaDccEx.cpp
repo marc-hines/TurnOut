@@ -2,78 +2,85 @@
 
 class turnOutSolinoidFaciaDccEx
 {
-    int ledPin;
-    int buttonPin;
+    int switchPin;
     int mcForwardPin;
     int mcReversePin;
 
-    int DccExActivatePin;
-    int DccExStatePin;
-
-    int previousButtonState;
-    unsigned long previousButtonDownMillis;
-    unsigned long previousButtonUpMillis;
+    int previousTurnOutState;
+    int previousSwitchState;
+    unsigned long previousSwitchDownMillis;
+    unsigned long previousSwitchUpMillis;
     unsigned long previousSoliniodMillis;
 
   public:
 
-    turnOutSolinoidFaciaDccEx (int _ledPin, int _buttonPin, int _mcForwardPin, int _mcReversePin)
+    turnOutSolinoidFaciaDccEx (int _switchPin, int _mcForwardPin, int _mcReversePin)
     {
-        ledPin = _ledPin;
-        buttonPin = _buttonPin;
+        switchPin = _switchPin;
         mcForwardPin = _mcForwardPin;
         mcReversePin = _mcReversePin;
 
-        pinMode(ledPin, OUTPUT); 
-        pinMode(buttonPin, INPUT_PULLUP); 
+        pinMode(switchPin, INPUT_PULLUP); 
         pinMode(mcForwardPin, OUTPUT); 
         pinMode(mcReversePin, OUTPUT); 
 
         digitalWrite(mcForwardPin, LOW);
         digitalWrite(mcReversePin, LOW);
 
-        previousButtonState = HIGH;
-        previousButtonDownMillis = 0;
-        previousButtonUpMillis = 0;
+        previousSwitchState = !(digitalRead(switchPin));
+        previousTurnOutState = !(previousSwitchState);
+        previousSwitchDownMillis = 0;
+        previousSwitchUpMillis = 0;
         previousSoliniodMillis = 0;
     }
 
     void update()
     {
+        int turnOutState;
         unsigned long currentMillis = millis();
 
         // We don't want the solinoid powered for more
-        // than about 1/5 second to avoid damading it
+        // than about 20 milliseconds to avoid damaging it
         if (currentMillis - previousSoliniodMillis >= 20)
         {
             digitalWrite(mcForwardPin, LOW);
             digitalWrite(mcReversePin, LOW);
         }
 
-        // Ignore any additional button movement
-        // for a bit - "debounce"
-        if (currentMillis - previousButtonDownMillis >= 400 && currentMillis - previousButtonUpMillis >= 400 )
+        int currentSwitchState = digitalRead(switchPin);
+
+        // Ignore any additional changes after a switch change - "debounce"
+        if (currentMillis - previousSwitchDownMillis >= 200 && currentMillis - previousSwitchUpMillis >= 200 )
         {
-            int currentButtonState = digitalRead(buttonPin);
-            // Filter out a long button press
-            if (currentButtonState == HIGH)
+            if (currentSwitchState == HIGH && previousSwitchState == LOW)
             {
-                previousButtonState = HIGH;
-                previousButtonUpMillis = currentMillis;
-            }
-            // If button is low and was high 
-            // before, this is new (and valid) button press
-            if (currentButtonState == LOW && previousButtonState == HIGH)
-            {
-
-                //digitalWrite(ledPin, turnOutState);
-                // Inform DccEx of the buttone press.
-                digitalWrite(DccExActivatePin, HIGH);
-                previousButtonDownMillis = currentMillis;
+                previousSwitchState = HIGH;
+                previousSwitchUpMillis = currentMillis;
                 previousSoliniodMillis = currentMillis;
-                previousButtonState = LOW;
-
+                activateSolinoid(LOW);
+            }
+            if (currentSwitchState == LOW && previousSwitchState == HIGH)
+            {
+                previousSwitchState = LOW;
+                previousSwitchDownMillis = currentMillis;
+                previousSoliniodMillis = currentMillis;
+                activateSolinoid(HIGH);
             }
         }
+    }
+
+    void activateSolinoid(int turnOutState)
+    {
+        if (turnOutState == LOW && previousTurnOutState == HIGH)
+        {
+            digitalWrite(mcForwardPin, LOW);
+            digitalWrite(mcReversePin, HIGH);
+        }
+        else
+        {
+            digitalWrite(mcForwardPin, HIGH);
+            digitalWrite(mcReversePin, LOW);
+        }
+        previousTurnOutState = turnOutState;
     }
 };

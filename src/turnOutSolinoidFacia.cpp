@@ -59,8 +59,7 @@ class turnOutSolinoidFacia
                 previousButtonState = HIGH;
                 previousButtonUpMillis = currentMillis;
             }
-            // If button is low and was high 
-            // before, this is new (and valid) button press
+            // If button is low and was high before, this is new (and valid) button press
             if (currentButtonState == LOW && previousButtonState == HIGH)
             {
                 if (turnOutState == LOW)
