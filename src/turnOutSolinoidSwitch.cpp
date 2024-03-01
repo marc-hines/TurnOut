@@ -2,6 +2,7 @@
 
 class turnOutSolinoidSwitch
 {
+    int ledPin;
     int switchPin;
     int mcForwardPin;
     int mcReversePin;
@@ -14,12 +15,14 @@ class turnOutSolinoidSwitch
 
   public:
 
-    turnOutSolinoidSwitch (int _switchPin, int _mcForwardPin, int _mcReversePin)
+    turnOutSolinoidSwitch (int _ledPin, int _switchPin, int _mcForwardPin, int _mcReversePin)
     {
+        ledPin = _ledPin;
         switchPin = _switchPin;
         mcForwardPin = _mcForwardPin;
         mcReversePin = _mcReversePin;
 
+        pinMode(ledPin, OUTPUT); 
         pinMode(switchPin, INPUT_PULLUP); 
         pinMode(mcForwardPin, OUTPUT); 
         pinMode(mcReversePin, OUTPUT); 
@@ -71,7 +74,7 @@ class turnOutSolinoidSwitch
 
     void activateSolinoid(int turnOutState)
     {
-        if (turnOutState == LOW && previousTurnOutState == HIGH)
+        if (turnOutState == LOW)
         {
             digitalWrite(mcForwardPin, LOW);
             digitalWrite(mcReversePin, HIGH);
@@ -81,6 +84,7 @@ class turnOutSolinoidSwitch
             digitalWrite(mcForwardPin, HIGH);
             digitalWrite(mcReversePin, LOW);
         }
+        digitalWrite(ledPin, turnOutState);
         previousTurnOutState = turnOutState;
     }
 };

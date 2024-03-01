@@ -12,7 +12,7 @@
 
   //turnOutSolinoidButton turnOut1 (22,26,23,24);
 
-  turnOutSolinoidSwitch turnOut2 (26,23,24);
+  turnOutSolinoidSwitch turnOut2 (22,26,23,24);
 
 void setup() {
 
