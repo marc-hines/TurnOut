@@ -50,7 +50,6 @@ class flashTwoLeds
                 previousButtonState = HIGH;
                 previousButtonUpMillis = currentMillis;
                 flashingState = HIGH;
-                
             }
             if (currentButtonState == LOW && previousButtonState == HIGH)
             {
@@ -62,6 +61,7 @@ class flashTwoLeds
 
         if (flashingState == HIGH)
         {
+            // Keep the LEDs flashing
             if (currentMillis - previousMillis >= duration)
             {
                 if (ledOneState == HIGH)
@@ -81,6 +81,7 @@ class flashTwoLeds
         }
         else
         {
+            // Turn off both LEDs
             digitalWrite(ledPin1, LOW);     // Update the actual LED1
             digitalWrite(ledPin2, LOW);     // Update the actual LED2
         }
