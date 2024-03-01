@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-class flashTwoLeds
+class flashTwoLedsSwitch
 {
 
 	int ledPin1;               // the number of the first LED pin
@@ -17,7 +17,7 @@ class flashTwoLeds
 
   public:
   
-    flashTwoLeds(int _ledPin1, int _ledPin2, int _switchPin, long _duration)
+    flashTwoLedsSwitch(int _ledPin1, int _ledPin2, int _switchPin, long _duration)
     {
         ledPin1 = _ledPin1;
         ledPin2 = _ledPin2;
@@ -42,7 +42,7 @@ class flashTwoLeds
         int currentButtonState = digitalRead(switchPin);
 
         // Ignore any additional changes after a switch change - "debounce"
-        if (currentMillis - previousSwitchDownMillis >= 200 && currentMillis - previousSwitchUpMillis >= 200 )
+        if (currentMillis - previousSwitchDownMillis >= 400 && currentMillis - previousSwitchUpMillis >= 400 )
         {
             if (currentButtonState == HIGH && previousSwitchState == LOW)
             {

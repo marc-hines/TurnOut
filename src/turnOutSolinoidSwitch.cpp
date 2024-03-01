@@ -51,7 +51,7 @@ class turnOutSolinoidSwitch
         int currentSwitchState = digitalRead(switchPin);
 
         // Ignore any additional changes after a switch change - "debounce"
-        if (currentMillis - previousSwitchDownMillis >= 200 && currentMillis - previousSwitchUpMillis >= 200 )
+        if (currentMillis - previousSwitchDownMillis >= 400 && currentMillis - previousSwitchUpMillis >= 400 )
         {
             if (currentSwitchState == HIGH && previousSwitchState == LOW)
             {
