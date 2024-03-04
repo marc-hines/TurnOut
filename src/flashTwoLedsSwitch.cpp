@@ -10,9 +10,9 @@ class flashTwoLedsSwitch
 
     int flashingState;
     int ledOneState;                 // which LED is currently on.
-    int previousSwitchState;
-    int previousSwitchDownMillis;
-    int previousSwitchUpMillis;
+    int previousSwitchState;         // Allows tracking if the switch state has changed
+    int previousSwitchDownMillis;    // Supports debouncing the press of the switch
+    int previousSwitchUpMillis;      // Supports debouncing the release of the switch
 	unsigned long previousMillis;    // will store last time LED was toggled
 
   public:
@@ -28,7 +28,7 @@ class flashTwoLedsSwitch
 
         duration = _duration;
 
-        flashingState = HIGH;
+        flashingState = LOW;
         ledOneState = HIGH; 
         previousSwitchState = HIGH;
         previousSwitchDownMillis = 0;
@@ -41,20 +41,20 @@ class flashTwoLedsSwitch
         unsigned long currentMillis = millis();
         int currentButtonState = digitalRead(switchPin);
 
-        // Ignore any additional changes after a switch change - "debounce"
+        // Ignore any additional changes after a switch change for 400 milliseconds - "debounce"
         if (currentMillis - previousSwitchDownMillis >= 400 && currentMillis - previousSwitchUpMillis >= 400 )
         {
             if (currentButtonState == HIGH && previousSwitchState == LOW)
             {
                 previousSwitchState = HIGH;
                 previousSwitchUpMillis = currentMillis;
-                flashingState = HIGH;
+                flashingState = LOW;
             }
             if (currentButtonState == LOW && previousSwitchState == HIGH)
             {
                 previousSwitchState = LOW;
                 previousSwitchDownMillis = currentMillis;
-                flashingState = LOW;
+                flashingState = HIGH;
             }
         }
 

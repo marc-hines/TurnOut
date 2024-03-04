@@ -5,7 +5,7 @@
 #include "turnOutSolinoidButton.cpp"
 #include "turnOutSolinoidSwitch.cpp"
 
-  //flashOneLed led1(22, 200, 250);
+  //flashOneLed led1(22, 500, 1000);
   //flashOneLed led2(23, 200, 300);
 
   flashTwoLedsSwitch led3(23, 24, 26, 600);

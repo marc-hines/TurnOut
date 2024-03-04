@@ -15,7 +15,7 @@ class flashOneLed
     flashOneLed(int _ledPin, long _onTime, long _offTime)
     {
         ledPin = _ledPin;
-        pinMode(ledPin, OUTPUT);     
+        pinMode(ledPin, OUTPUT);   
         
         onTime = _onTime;
         offTime = _offTime;
@@ -31,15 +31,21 @@ class flashOneLed
         
         if((ledState == HIGH) && (currentMillis - previousMillis >= onTime))
         {
-            ledState = LOW;  // Turn it off
-            previousMillis = currentMillis;  // Remember the time
-            digitalWrite(ledPin, ledState);  // Update the actual LED
+            swapLedState(currentMillis);
         }
         else if ((ledState == LOW) && (currentMillis - previousMillis >= offTime))
         {
-            ledState = HIGH;  // turn it on
-            previousMillis = currentMillis;   // Remember the time
-            digitalWrite(ledPin, ledState);	  // Update the actual LED
+            swapLedState(currentMillis);
         }
     }
+
+private:
+
+    void swapLedState(unsigned long currentMillis)
+    {
+        ledState = !(ledState);           // swap the LED state
+        previousMillis = currentMillis;   // Remember the time
+        digitalWrite(ledPin, ledState);	  // Update the actual LED
+    }
+
 };
