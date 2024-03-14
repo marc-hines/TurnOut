@@ -15,7 +15,10 @@ class turnOutSolinoidSwitch
 
   public:
 
-    turnOutSolinoidSwitch (int _ledPin, int _switchPin, int _mcForwardPin, int _mcReversePin)
+    turnOutSolinoidSwitch (int _ledPin,
+                           int _switchPin,
+                           int _mcForwardPin,
+                           int _mcReversePin)
     {
         ledPin = _ledPin;
         switchPin = _switchPin;
@@ -51,7 +54,7 @@ class turnOutSolinoidSwitch
         int currentSwitchState = digitalRead(switchPin);
 
         // Ignore any additional changes after a switch change - "debounce"
-        if (currentMillis - previousSwitchDownMillis >= 400 && currentMillis - previousSwitchUpMillis >= 400 )
+        if (currentMillis - previousSwitchDownMillis >= 200 && currentMillis - previousSwitchUpMillis >= 200 )
         {
             if (currentSwitchState == HIGH && previousSwitchState == LOW)
             {

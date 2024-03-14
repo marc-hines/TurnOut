@@ -15,7 +15,10 @@ class turnOutSolinoidButton
 
   public:
 
-    turnOutSolinoidButton (int _ledPin, int _buttonPin, int _mcForwardPin, int _mcReversePin)
+    turnOutSolinoidButton (int _ledPin,
+                           int _buttonPin,
+                           int _mcForwardPin,
+                           int _mcReversePin)
     {
         ledPin = _ledPin;
         buttonPin = _buttonPin;
@@ -50,7 +53,7 @@ class turnOutSolinoidButton
         }
 
         // Ignore any additional button movement for a bit after a button press or release - "debounce"
-        if (currentMillis - previousButtonDownMillis >= 400 && currentMillis - previousButtonUpMillis >= 400 )
+        if (currentMillis - previousButtonDownMillis >= 100 && currentMillis - previousButtonUpMillis >= 100 )
         {
             int currentButtonState = digitalRead(buttonPin);
             // Filter out a long button press

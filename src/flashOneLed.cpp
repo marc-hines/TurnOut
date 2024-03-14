@@ -12,7 +12,9 @@ class flashOneLed
 
   public:
   
-    flashOneLed(int _ledPin, long _onTime, long _offTime)
+    flashOneLed(int _ledPin,
+                unsigned long _onTime,
+                unsigned long _offTime)
     {
         ledPin = _ledPin;
         pinMode(ledPin, OUTPUT);   

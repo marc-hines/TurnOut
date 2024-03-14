@@ -17,7 +17,10 @@ class flashTwoLedsSwitch
 
   public:
   
-    flashTwoLedsSwitch(int _ledPin1, int _ledPin2, int _switchPin, long _duration)
+    flashTwoLedsSwitch(int _ledPin1,
+                       int _ledPin2,
+                       int _switchPin,
+                       unsigned long _duration)
     {
         ledPin1 = _ledPin1;
         ledPin2 = _ledPin2;
