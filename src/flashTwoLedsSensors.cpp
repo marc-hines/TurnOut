@@ -18,8 +18,8 @@ class flashTwoLedsSensors
     int previousSensor2State;               // Allows tracking if the senor 2 state has changed
     int previousSensor3State;               // Allows tracking if the senor 3 state has changed
     int previousSensor4State;               // Allows tracking if the senor 4 state has changed
-	unsigned long previousLedChangeMillis;  // will store last time LED was toggled
-    unsigned long flashLedshUntilMillis;    // will store last time LED was toggled
+	unsigned long previousLedChangedMillis; // will store last time LED was toggled
+    unsigned long flashLedsUntilMillis;     // will store last time LED was toggled
 
   public:
   
@@ -66,8 +66,8 @@ class flashTwoLedsSensors
         if (sensor4Pin != 0){
             previousSensor4State = digitalRead(sensor4Pin);
         }
-        previousLedChangeMillis = 0;
-        flashLedshUntilMillis = 0;
+        previousLedChangedMillis = 0;
+        flashLedsUntilMillis = 0;
     }
 
     void update()
@@ -82,7 +82,7 @@ class flashTwoLedsSensors
         if (currentSensor1State == LOW && previousSensor1State == HIGH)
         {
             previousSensor1State = LOW;
-            flashLedshUntilMillis =  currentMillis + delay;
+            flashLedsUntilMillis =  currentMillis + delay;
         }
 
         if (sensor2Pin != 0){
@@ -94,7 +94,7 @@ class flashTwoLedsSensors
             if (currentSensor2State == LOW && previousSensor2State == HIGH)
             {
                 previousSensor2State = LOW;
-                flashLedshUntilMillis =  currentMillis + delay;
+                flashLedsUntilMillis =  currentMillis + delay;
             }
         }
 
@@ -107,7 +107,7 @@ class flashTwoLedsSensors
             if (currentSensor3State == LOW && previousSensor3State == HIGH)
             {
                 previousSensor3State = LOW;
-                flashLedshUntilMillis =  currentMillis + delay;
+                flashLedsUntilMillis =  currentMillis + delay;
             }
         }
 
@@ -120,14 +120,14 @@ class flashTwoLedsSensors
             if (currentSensor4State == LOW && previousSensor4State == HIGH)
             {
                 previousSensor4State = LOW;
-                flashLedshUntilMillis =  currentMillis + delay;
+                flashLedsUntilMillis =  currentMillis + delay;
             }
         }
 
-        if (currentMillis <= flashLedshUntilMillis)
+        if (currentMillis <= flashLedsUntilMillis)
         {
             // Keep the LEDs flashing
-            if (currentMillis - previousLedChangeMillis >= duration)
+            if (currentMillis - previousLedChangedMillis >= duration)
             {
                 if (ledOneState == HIGH)
                 {
@@ -141,7 +141,7 @@ class flashTwoLedsSensors
                     digitalWrite(ledPin1, HIGH);    // Update the actual LED1
                     digitalWrite(ledPin2, LOW);     // Update the actual LED2
                 }
-                previousLedChangeMillis = currentMillis;  // Remember the time
+                previousLedChangedMillis = currentMillis;  // Remember the time
             }
         }
         else
