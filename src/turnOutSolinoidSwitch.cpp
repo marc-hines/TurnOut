@@ -40,7 +40,7 @@ class turnOutSolinoidSwitch
         previousSoliniodMillis = 0;
     }
 
-    void update()
+    void loop()
     {
         unsigned long currentMillis = millis();
 

@@ -12,21 +12,28 @@ class flashOneLed
 
   public:
   
-    flashOneLed(int _ledPin,
-                unsigned long _onTime,
-                unsigned long _offTime)
-    {
-        ledPin = _ledPin;
-        pinMode(ledPin, OUTPUT);   
-        
-        onTime = _onTime;
-        offTime = _offTime;
+    flashOneLed()
+    {  
+        onTime = 500;
+        offTime = 2000;
         
         ledState = LOW; 
         previousMillis = 0;
     }
 
-    void update()
+    void setLedPin(int _ledPin)
+    {
+        ledPin = _ledPin;
+        pinMode(ledPin, OUTPUT);
+    }
+
+    void setTimers(int _onTime, int _offTime)
+    {
+        onTime = _onTime;
+        offTime = _offTime;
+    }
+
+    void loop()
     {
         // check to see if it's time to change the state of the LED
         unsigned long currentMillis = millis();

@@ -39,7 +39,7 @@ class flashTwoLedsSwitch
         previousMillis = 0;
     }
 
-    void update()
+    void loop()
     {
         unsigned long currentMillis = millis();
         int currentButtonState = digitalRead(switchPin);

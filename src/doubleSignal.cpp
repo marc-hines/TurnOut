@@ -4,22 +4,17 @@
 
 class doubleSignal
 {
+    int sensorPinEast;             // East Sensor Pin
+    int sensorPinWest;             // West Sensor Pin
 
-	int ledPinUpperGreen;         // the number of the Upper Green LED pin
-    int ledPinUpperYellow;        // the number of the Upper Yellow LED pin
-    int ledPinUpperRed;           // the number of the Upper Red LED pin
-	int ledPinLowerGreen;         // the number of the Lower Green LED pin
-    int ledPinLowerYellow;        // the number of the Lower Yellow LED pin
-    int ledPinLowerRed;           // the number of the Lower Red LED pin
+    int blockPinInputEast;         // East Block Input Pin from another Auruido
+    int blockPinInputWest;         // West Block Input Pin from another Auruido
 
-    int sensorPinEast;            // East Sensor Pin
-    int sensorPinWest;            // West Sensor Pin
+    int blockPinOutputEast;        // Output pin to East Block Auruido
+    int blockPinOutputWest;        // Output pin to West Block Auruido
 
-    int blockPinInputEast;             // East Block Input Pin from another Auruido
-    int blockPinInputWest;             // West Block Input Pin from another Auruido
-
-    boolean blockEastOccupied;    // True if the block to the East is occupied
-    boolean blockWestOccupied;    // True if the block to the West is occupied
+    boolean blockEastOccupied;     // True if the block to the East is occupied
+    boolean blockWestOccupied;     // True if the block to the West is occupied
 
     threeAspect threeAspectUpper;
     threeAspect threeAspectLower;
@@ -30,6 +25,8 @@ class doubleSignal
     {
         blockPinInputEast = 0;          // Default to no pin set
         blockPinInputWest = 0;          // Default to no pin set
+        blockPinOutputEast = 0;         // Default to no pin set
+        blockPinOutputWest = 0;         // Default to no pin set
     }
 
     void setUpperLedPins(int _ledPinUpperGreen,
@@ -59,8 +56,18 @@ class doubleSignal
                            int _blockPinInputWest)
     {
         blockPinInputEast = _blockPinInputEast;
+        pinMode(blockPinInputEast, INPUT);
         blockPinInputWest = _blockPinInputWest;
+        pinMode(blockPinInputWest, INPUT);
     }
 
+    void setBlockOutputPins(int _blockPinOutputEast,
+                            int _blockPinOutputWest)
+    {
+        blockPinOutputEast = _blockPinOutputEast;
+        pinMode(blockPinOutputEast, INPUT);
+        blockPinOutputWest = _blockPinOutputWest;
+        pinMode(blockPinOutputWest, INPUT);
+    }
 
 };

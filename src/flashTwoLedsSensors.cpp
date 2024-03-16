@@ -70,7 +70,7 @@ class flashTwoLedsSensors
         flashLedsUntilMillis = 0;
     }
 
-    void update()
+    void loop()
     {
         unsigned long currentMillis = millis();
 
