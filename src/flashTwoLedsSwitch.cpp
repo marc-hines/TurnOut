@@ -17,26 +17,35 @@ class flashTwoLedsSwitch
 
   public:
   
-    flashTwoLedsSwitch(int _ledPin1,
-                       int _ledPin2,
-                       int _switchPin,
-                       unsigned long _duration)
+    flashTwoLedsSwitch()
     {
-        ledPin1 = _ledPin1;
-        ledPin2 = _ledPin2;
-        switchPin = _switchPin;
-        pinMode(ledPin1, OUTPUT);
-        pinMode(ledPin2, OUTPUT); 
-        pinMode(switchPin, INPUT_PULLUP); 
-
-        duration = _duration;
-
+        duration = 500;
         flashingState = LOW;
         ledOneState = HIGH; 
         previousSwitchState = HIGH;
         previousSwitchDownMillis = 0;
         previousSwitchUpMillis = 0;
         previousMillis = 0;
+    }
+
+    void setLedPins(int _ledPin1,
+                    int _ledPin2) 
+    {
+        ledPin1 = _ledPin1;
+        ledPin2 = _ledPin2;
+        pinMode(ledPin1, OUTPUT);
+        pinMode(ledPin2, OUTPUT); 
+    }
+
+    void setSwitchPin(int _switchPin)
+    {
+        switchPin = _switchPin;
+        pinMode(switchPin, INPUT_PULLUP); 
+    }
+
+    void setFlashDuration(unsigned long _duration)
+    {
+        duration = _duration;
     }
 
     void loop()

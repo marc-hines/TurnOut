@@ -23,51 +23,70 @@ class flashTwoLedsSensors
 
   public:
   
-    flashTwoLedsSensors(int _ledPin1, 
-                        int _ledPin2,
-                        int _sensor1Pin,
-                        int _sensor2Pin,
-                        int _sensor3Pin,
-                        int _sensor4Pin,
-                        unsigned long _duration,
-                        unsigned long _delay)
+    flashTwoLedsSensors()
+    {
+        sensor2Pin = 0;
+        sensor3Pin = 0;
+        sensor4Pin = 0;
+        duration = 500;
+        delay = 2000;
+        flashingState = LOW;
+        ledOneState = HIGH;
+        previousLedChangedMillis = 0;
+        flashLedsUntilMillis = 0;
+    }
+
+    void setLedPins(int _ledPin1, 
+                    int _ledPin2)
     {
         ledPin1 = _ledPin1;
         ledPin2 = _ledPin2;
         pinMode(ledPin1, OUTPUT);
         pinMode(ledPin2, OUTPUT);
+    }
+
+    void setSensor1Pin(int _sensor1Pin)
+    {
         sensor1Pin = _sensor1Pin;
         pinMode(sensor1Pin, INPUT_PULLUP);
+        previousSensor1State = digitalRead(sensor1Pin);
+    }
+
+    void setSensor2Pin(int _sensor2Pin)
+    {
         sensor2Pin = _sensor2Pin;
         if (sensor2Pin != 0){
             pinMode(sensor2Pin, INPUT_PULLUP);
+            previousSensor2State = digitalRead(sensor2Pin);
         }
+    }
+
+    void setSensor3Pin(int _sensor3Pin)
+    {
         sensor3Pin = _sensor3Pin;
         if (sensor3Pin != 0){
             pinMode(sensor3Pin, INPUT_PULLUP);
+            previousSensor3State = digitalRead(sensor3Pin);
         }
+    }
+
+    void setSensor4Pin(int _sensor4Pin)
+    {
         sensor4Pin = _sensor4Pin;
         if (sensor4Pin != 0){
             pinMode(sensor4Pin, INPUT_PULLUP);
-        }
-
-        duration = _duration;
-        delay = _delay;
-
-        flashingState = LOW;
-        ledOneState = HIGH;
-        previousSensor1State = digitalRead(sensor1Pin);
-        if (sensor2Pin != 0){
-            previousSensor2State = digitalRead(sensor2Pin);
-        }
-        if (sensor3Pin != 0){
-            previousSensor3State = digitalRead(sensor3Pin);
-        }
-        if (sensor4Pin != 0){
             previousSensor4State = digitalRead(sensor4Pin);
         }
-        previousLedChangedMillis = 0;
-        flashLedsUntilMillis = 0;
+    }
+
+    void setFlashDuration(unsigned long _duration)
+    {
+        duration = _duration;
+    }
+
+    void setTurnOffDelay(unsigned long _delay)
+    {
+        delay = _delay;
     }
 
     void loop()

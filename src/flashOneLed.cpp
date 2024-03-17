@@ -27,9 +27,13 @@ class flashOneLed
         pinMode(ledPin, OUTPUT);
     }
 
-    void setTimers(int _onTime, int _offTime)
+    void setOnDuration(int _onTime)
     {
         onTime = _onTime;
+    }
+
+    void setOffDuration(int _offTime)
+    {
         offTime = _offTime;
     }
 

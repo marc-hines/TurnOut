@@ -7,33 +7,73 @@
 #include "turnOutSolinoidSwitch.cpp"
 #include "doubleSignal.cpp"
 
-  flashOneLed flashLed;
-
-  //flashTwoLedsSwitch flashSwitch(23, 24, 26, 600);
-
-  //flashTwoLedsSensors flashSensors(23, 24, 26, 0, 0, 0, 600, 2000);
-
-  //turnOutSolinoidButton turnOutButton(22,26,23,24);
-
-  //turnOutSolinoidSwitch turnOutSwitch(22,26,23,24);
+/*
+flashOneLed flashLed;
 
 void setup() {
-
-  flashLed.setLedPin(22);
-  flashLed.setTimers(500, 1000);
-
+    flashLed.setLedPin(22);
+    flashLed.setOnDuration(500);    // Optional
+    flashLed.setOffDuration(1000);  // Optional
 }
 
 void loop() {
+    flashLed.loop();
+}
+*/
 
-  flashLed.loop();
+/*
+flashTwoLedsSwitch flashSwitch;
 
-  //flashSwitch.loop();
+void setup() {
+    flashSwitch.setLedPins(23, 24);
+    flashSwitch.setSwitchPin(26);
+    flashSwitch.setFlashDuration(500); // Optional
+}
 
-  //flashSensors.loop();
+void loop() {
+    flashSwitch.loop();
+}
+*/
+/*
+flashTwoLedsSensors flashSensors;
 
-  //turnOutButton.loop();
+void setup() {
+    flashSensors.setLedPins(23, 24);
+    flashSensors.setSensor1Pin(26);
+    flashSensors.setSensor2Pin(0);       // Optional
+    flashSensors.setSensor3Pin(0);       // Optional
+    flashSensors.setSensor4Pin(0);       // Optional
+    flashSensors.setFlashDuration(500);  // Optional 
+    flashSensors.setTurnOffDelay(2000);  // Optional
+}
 
-  //turnOutSwitch.loop();
+void loop() {
+  flashSensors.loop();
+}
+*/
 
+/*
+turnOutSolinoidButton turnOutButton;
+
+void setup() {
+    turnOutButton.setLedPin(22);
+    turnOutButton.setButtonPin(26);
+    turnOutButton.setSolinoidPins(23,24);
+}
+
+void loop() {
+    turnOutButton.loop();
+}
+*/
+
+turnOutSolinoidSwitch turnOutSwitch;
+
+void setup() {
+    turnOutSwitch.setLedPin(22);
+    turnOutSwitch.setSwitchPin(26);
+    turnOutSwitch.setSolinoidPins(23,24);
+}
+
+void loop() {
+    turnOutSwitch.loop();
 }

@@ -15,29 +15,38 @@ class turnOutSolinoidButton
 
   public:
 
-    turnOutSolinoidButton (int _ledPin,
-                           int _buttonPin,
-                           int _mcForwardPin,
-                           int _mcReversePin)
+    turnOutSolinoidButton ()
     {
-        ledPin = _ledPin;
-        buttonPin = _buttonPin;
-        mcForwardPin = _mcForwardPin;
-        mcReversePin = _mcReversePin;
-
-        pinMode(ledPin, OUTPUT); 
-        pinMode(buttonPin, INPUT_PULLUP); 
-        pinMode(mcForwardPin, OUTPUT); 
-        pinMode(mcReversePin, OUTPUT); 
-
-        digitalWrite(mcForwardPin, LOW);
-        digitalWrite(mcReversePin, LOW);
-
         turnOutState = LOW;
         previousButtonState = HIGH;
         previousButtonDownMillis = 0;
         previousButtonUpMillis = 0;
         previousSoliniodMillis = 0;
+    }
+
+    void setLedPin(int _ledPin)
+    {
+        ledPin = _ledPin;
+        pinMode(ledPin, OUTPUT); 
+    }
+
+    void setButtonPin(int _buttonPin)
+    {
+        buttonPin = _buttonPin;
+        pinMode(buttonPin, INPUT_PULLUP);
+    }
+
+    void setSolinoidPins(int _mcForwardPin,
+                         int _mcReversePin)
+    {
+        mcForwardPin = _mcForwardPin;
+        mcReversePin = _mcReversePin;
+
+        pinMode(mcForwardPin, OUTPUT);
+        pinMode(mcReversePin, OUTPUT);
+
+        digitalWrite(mcForwardPin, LOW);
+        digitalWrite(mcReversePin, LOW);
     }
 
     void loop()

@@ -15,29 +15,38 @@ class turnOutSolinoidSwitch
 
   public:
 
-    turnOutSolinoidSwitch (int _ledPin,
-                           int _switchPin,
-                           int _mcForwardPin,
-                           int _mcReversePin)
+    turnOutSolinoidSwitch ()
+    {
+        previousSwitchDownMillis = 0;
+        previousSwitchUpMillis = 0;
+        previousSoliniodMillis = 0;
+    }
+
+    void setLedPin(int _ledPin)
     {
         ledPin = _ledPin;
+        pinMode(ledPin, OUTPUT); 
+    }
+
+    void setSwitchPin(int _switchPin)
+    {
         switchPin = _switchPin;
+        pinMode(switchPin, INPUT_PULLUP);
+        previousSwitchState = !(digitalRead(switchPin));
+        previousTurnOutState = !(previousSwitchState);
+    }
+
+    void setSolinoidPins(int _mcForwardPin,
+                         int _mcReversePin)
+    {
         mcForwardPin = _mcForwardPin;
         mcReversePin = _mcReversePin;
 
-        pinMode(ledPin, OUTPUT); 
-        pinMode(switchPin, INPUT_PULLUP); 
         pinMode(mcForwardPin, OUTPUT); 
         pinMode(mcReversePin, OUTPUT); 
 
         digitalWrite(mcForwardPin, LOW);
         digitalWrite(mcReversePin, LOW);
-
-        previousSwitchState = !(digitalRead(switchPin));
-        previousTurnOutState = !(previousSwitchState);
-        previousSwitchDownMillis = 0;
-        previousSwitchUpMillis = 0;
-        previousSoliniodMillis = 0;
     }
 
     void loop()
