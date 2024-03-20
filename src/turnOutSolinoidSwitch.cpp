@@ -2,8 +2,8 @@
 
 class turnOutSolinoidSwitch
 {
-    int ledPin;
-    int switchPin;
+    int ledPin;            // pin that controls the 2 LEDa showing 'unthrown' and 'thrown' states
+    int switchPin;         // pin for switch or DCC-EX outpit thta controls the tunrout
     int mcForwardPin;
     int mcReversePin;
 
@@ -12,6 +12,9 @@ class turnOutSolinoidSwitch
     unsigned long previousSwitchDownMillis;
     unsigned long previousSwitchUpMillis;
     unsigned long previousSoliniodMillis;
+
+    int ledOn;       // to allow LEDs common anoode or common cagthode operation
+    int ledOff;      // to allow LEDs common anoode or common cagthode operation
 
   public:
 
@@ -47,6 +50,16 @@ class turnOutSolinoidSwitch
 
         digitalWrite(mcForwardPin, LOW);
         digitalWrite(mcReversePin, LOW);
+    }
+
+    void setLedsCommonAnode() {
+        ledOn = LOW;
+        ledOff = HIGH;
+    }
+
+    void setLedsCommonCathode() {
+        ledOn = HIGH;
+        ledOff = LOW;      
     }
 
     void loop()
@@ -90,13 +103,14 @@ private:
         {
             digitalWrite(mcForwardPin, LOW);
             digitalWrite(mcReversePin, HIGH);
+            digitalWrite(ledPin, ledOn);
         }
         else
         {
             digitalWrite(mcForwardPin, HIGH);
             digitalWrite(mcReversePin, LOW);
+            digitalWrite(ledPin, ledOff);
         }
-        digitalWrite(ledPin, turnOutState);
         previousTurnOutState = turnOutState;
     }
 };

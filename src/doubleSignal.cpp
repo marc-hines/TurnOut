@@ -16,8 +16,8 @@ class doubleSignal
     boolean blockEastOccupied;     // True if the block to the East is occupied
     boolean blockWestOccupied;     // True if the block to the West is occupied
 
-    threeAspect threeAspectUpper;
-    threeAspect threeAspectLower;
+    threeAspect threeAspectUpper;  // Upper 3 aspect signal class
+    threeAspect threeAspectLower;  // Lower 3 aspect signal class
 
   public:
   
@@ -41,6 +41,18 @@ class doubleSignal
                          int _ledPinLowerRed)
     {
         threeAspectLower.setPins(_ledPinLowerGreen, _ledPinLowerYellow, _ledPinLowerRed);
+    }
+
+    void setLedsCommonAnode()
+    {
+        threeAspectUpper.setLedsCommonAnode();
+        threeAspectLower.setLedsCommonAnode();
+    }
+
+    void setLedsCommonCathode()
+    {
+        threeAspectUpper.setLedsCommonCathode();
+        threeAspectLower.setLedsCommonCathode();
     }
 
     void setSensorPins(int _sensorPinEast,
