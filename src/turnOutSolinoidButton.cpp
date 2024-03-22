@@ -12,6 +12,10 @@ class turnOutSolinoidButton
     unsigned long previousButtonDownMillis;
     unsigned long previousButtonUpMillis;
     unsigned long previousSoliniodMillis;
+    unsigned long soliniodOnMillis;
+
+    int ledOn;       // to allow LEDs common anoode or common cagthode operation
+    int ledOff;      // to allow LEDs common anoode or common cagthode operation
 
   public:
 
@@ -22,6 +26,7 @@ class turnOutSolinoidButton
         previousButtonDownMillis = 0;
         previousButtonUpMillis = 0;
         previousSoliniodMillis = 0;
+        soliniodOnMillis = 20;
     }
 
     void setLedPin(int _ledPin)
@@ -49,13 +54,28 @@ class turnOutSolinoidButton
         digitalWrite(mcReversePin, LOW);
     }
 
+    void setSoliniodOnTime(unsigned long _soliniodOnMillis)
+    {
+        soliniodOnMillis = _soliniodOnMillis;
+        if (soliniodOnMillis > 500)
+        {
+            soliniodOnMillis = 500;
+        }
+    }
+
+    void swapLedPolarities()
+    {
+        ledOn = !(ledOn);
+        ledOff = !(ledOff);
+    }
+
     void loop()
     {
         unsigned long currentMillis = millis();
 
         // We don't want the solinoid powered for more
         // than about 20 milliseconds to avoid damaging it
-        if (currentMillis - previousSoliniodMillis >= 20)
+        if (currentMillis - previousSoliniodMillis >= soliniodOnMillis)
         {
             digitalWrite(mcForwardPin, LOW);
             digitalWrite(mcReversePin, LOW);
@@ -79,14 +99,15 @@ class turnOutSolinoidButton
                     turnOutState = HIGH;
                     digitalWrite(mcForwardPin, HIGH);
                     digitalWrite(mcReversePin, LOW);
+                    digitalWrite(ledPin, ledOn);
                 }
                 else
                 {
                     turnOutState = LOW;
                     digitalWrite(mcForwardPin, LOW);
                     digitalWrite(mcReversePin, HIGH);
+                    digitalWrite(ledPin, ledOff);
                 }
-                digitalWrite(ledPin, turnOutState);
                 previousButtonDownMillis = currentMillis;
                 previousSoliniodMillis = currentMillis;
                 previousButtonState = LOW;

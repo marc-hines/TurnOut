@@ -12,6 +12,7 @@ class turnOutSolinoidSwitch
     unsigned long previousSwitchDownMillis;
     unsigned long previousSwitchUpMillis;
     unsigned long previousSoliniodMillis;
+    unsigned long soliniodOnMillis;
 
     int ledOn;       // to allow LEDs common anoode or common cagthode operation
     int ledOff;      // to allow LEDs common anoode or common cagthode operation
@@ -23,6 +24,7 @@ class turnOutSolinoidSwitch
         previousSwitchDownMillis = 0;
         previousSwitchUpMillis = 0;
         previousSoliniodMillis = 0;
+        soliniodOnMillis = 20;
     }
 
     void setLedPin(int _ledPin)
@@ -52,14 +54,19 @@ class turnOutSolinoidSwitch
         digitalWrite(mcReversePin, LOW);
     }
 
-    void setLedsCommonAnode() {
-        ledOn = LOW;
-        ledOff = HIGH;
+    void setSoliniodOnTime(unsigned long _soliniodOnMillis)
+    {
+        soliniodOnMillis = _soliniodOnMillis;
+        if (soliniodOnMillis > 500)
+        {
+            soliniodOnMillis = 500;
+        }
     }
 
-    void setLedsCommonCathode() {
-        ledOn = HIGH;
-        ledOff = LOW;      
+    void swapLedPolarities()
+    {
+        ledOn = !(ledOn);
+        ledOff = !(ledOff);
     }
 
     void loop()
@@ -67,7 +74,7 @@ class turnOutSolinoidSwitch
         unsigned long currentMillis = millis();
 
         // We don't want the solinoid powered for more than about 20 milliseconds to avoid damaging it
-        if (currentMillis - previousSoliniodMillis >= 20)
+        if (currentMillis - previousSoliniodMillis >= soliniodOnMillis)
         {
             digitalWrite(mcForwardPin, LOW);
             digitalWrite(mcReversePin, LOW);
@@ -76,7 +83,7 @@ class turnOutSolinoidSwitch
         int currentSwitchState = digitalRead(switchPin);
 
         // Ignore any additional changes after a switch change - "debounce"
-        if (currentMillis - previousSwitchDownMillis >= 200 && currentMillis - previousSwitchUpMillis >= 200 )
+        if (currentMillis - previousSwitchDownMillis >= 100 && currentMillis - previousSwitchUpMillis >= 100 )
         {
             if (currentSwitchState == HIGH && previousSwitchState == LOW)
             {

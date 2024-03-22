@@ -43,18 +43,6 @@ class doubleSignal
         threeAspectLower.setPins(_ledPinLowerGreen, _ledPinLowerYellow, _ledPinLowerRed);
     }
 
-    void setLedsCommonAnode()
-    {
-        threeAspectUpper.setLedsCommonAnode();
-        threeAspectLower.setLedsCommonAnode();
-    }
-
-    void setLedsCommonCathode()
-    {
-        threeAspectUpper.setLedsCommonCathode();
-        threeAspectLower.setLedsCommonCathode();
-    }
-
     void setSensorPins(int _sensorPinEast,
                        int _sensorPinWest)
     {
@@ -80,6 +68,18 @@ class doubleSignal
         pinMode(blockPinOutputEast, INPUT);
         blockPinOutputWest = _blockPinOutputWest;
         pinMode(blockPinOutputWest, INPUT);
+    }
+
+    void setLedsCommonAnode()
+    {
+        threeAspectUpper.setLedsCommonAnode();
+        threeAspectLower.setLedsCommonAnode();
+    }
+
+    void setLedsCommonCathode()
+    {
+        threeAspectUpper.setLedsCommonCathode();
+        threeAspectLower.setLedsCommonCathode();
     }
 
 };
