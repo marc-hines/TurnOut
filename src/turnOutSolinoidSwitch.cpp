@@ -57,9 +57,9 @@ class turnOutSolinoidSwitch
     void setSoliniodOnTime(unsigned long _soliniodOnMillis)
     {
         soliniodOnMillis = _soliniodOnMillis;
-        if (soliniodOnMillis > 500)
+        if (soliniodOnMillis > 250)
         {
-            soliniodOnMillis = 500;
+            soliniodOnMillis = 250;
         }
     }
 
@@ -73,7 +73,7 @@ class turnOutSolinoidSwitch
     {
         unsigned long currentMillis = millis();
 
-        // We don't want the solinoid powered for more than about 20 milliseconds to avoid damaging it
+        // We want the solinoid powered for a limited time to avoid damaging it
         if (currentMillis - previousSoliniodMillis >= soliniodOnMillis)
         {
             digitalWrite(mcForwardPin, LOW);

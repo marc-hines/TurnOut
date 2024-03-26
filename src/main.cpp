@@ -5,7 +5,7 @@
 #include "flashTwoLedsSensors.cpp"
 #include "turnOutSolinoidButton.cpp"
 #include "turnOutSolinoidSwitch.cpp"
-#include "doubleSignal.cpp"
+#include "singleThreeAspectSignal.cpp"
 
 /*
 flashOneLed flashLed;
