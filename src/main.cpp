@@ -6,6 +6,21 @@
 #include "turnOutSolinoidButton.cpp"
 #include "turnOutSolinoidSwitch.cpp"
 #include "singleThreeAspectSignal.cpp"
+#include "fireLed.cpp"
+
+/*
+fireLed campFire;
+
+void setup() {
+    campFire.setLedPin1(22);
+    campFire.setLedPin2(23);
+    campFire.setLedPin3(24);
+}
+
+void loop() {
+    campFire.loop();
+}
+*/
 
 /*
 flashOneLed flashLed;
@@ -21,7 +36,7 @@ void loop() {
 }
 */
 
-/*
+
 flashTwoLedsSwitch flashSwitch;
 
 void setup() {
@@ -33,7 +48,8 @@ void setup() {
 void loop() {
     flashSwitch.loop();
 }
-*/
+
+
 /*
 flashTwoLedsSensors flashSensors;
 
@@ -66,6 +82,7 @@ void loop() {
 }
 */
 
+/*
 turnOutSolinoidSwitch turnOutSwitch;
 
 void setup() {
@@ -77,3 +94,4 @@ void setup() {
 void loop() {
     turnOutSwitch.loop();
 }
+*/

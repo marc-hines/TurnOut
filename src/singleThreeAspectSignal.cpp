@@ -4,14 +4,28 @@
 
 /*
 
-[Block 1] [Block 2] [Block 3] [Block 4] [Block 5]
-[s     s] [s     s] [s --> s] [s     s] [s     s]  --- Sendors in each block
-          [Green--] [Red----] [Yellow-] [Green--]  <-- Signals for Opposing trains
-                    [  -->  ]                      --> Train in block 3
-[Green--] [Yellow-] [Red----] [Green--]            --> Signals for this train
+ [Block 1] [Block 2] [Block 3] [Block 4] [Block 5] [Block 6]
+ [s     s] [s     s] [s     s] [s     s] [s     s] [s     s]       s = Sensors in each block
+           [--Green] [----Red] [----Red] [-Yellow] [--Green]   <-- Signals for Opposing travel
+                     [ TTT-> ]                                 --> Train in block 3
+ [Green--] [Yellow-] [Red----] [Green--]                       --> Signals for this train
 
+
+ [Block 1] [Block 2] [Block 3] [Block 4] [Block 5] [Block 6]
+s[       ]s[       ]s[       ]s[       ]s[       ]s[       ]s      s = Sensor where blocks meet
+           [--Green] [----Red] [----Red] [-Yellow] [--Green]   <-- Signals for Opposing travel
+                     [ TTT-> ]                                 --> Train in block 3
+ [Green--] [Yellow-] [Red----] [Green--]                       --> Signals for this train
+
+After 'WakeUp', any Senor fired ( shown as 'S') does this:
+
+s[       ]s[       ]S[       ]s[       ]s
+ [Yellow-] [Red----] [Red----] [Yellow-]   
+                   TTT                    Train moving in unknown direction
+ [Yellow-] [Red----] [Red----] [Yellow-]
 
 */
+
 
 
 enum SIGNALSTATES
